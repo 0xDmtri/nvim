@@ -24,6 +24,7 @@ return {
   config = function()
     local dap = require 'dap'
     local dapui = require 'dapui'
+    local wk = require('which-key')
 
     require('mason-nvim-dap').setup {
       -- Makes a best effort to setup the various debuggers with
@@ -47,10 +48,14 @@ return {
     vim.keymap.set('n', '<F1>', dap.step_into)
     vim.keymap.set('n', '<F2>', dap.step_over)
     vim.keymap.set('n', '<F3>', dap.step_out)
-    vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint)
-    vim.keymap.set('n', '<leader>B', function()
-      dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
-    end)
+
+    wk.register({
+      ['<leader>tb'] = { dap.toggle_breakpoint, '[T]oggle [B]reakpoint' },
+      ['<leader>tc'] = { function()
+        dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
+      end, '[T]oggle [C]onditional Breakpoint'
+      },
+    })
 
     -- Dap UI setup
     -- For more information, see |:help nvim-dap-ui|
