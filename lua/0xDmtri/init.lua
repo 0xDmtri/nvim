@@ -60,6 +60,19 @@ require('lazy').setup({
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { 'j-hui/fidget.nvim',       opts = {} },
 
+      {
+        -- Better errors
+        "folke/trouble.nvim",
+        dependecies = {
+          'nvim-tree/nvim-web-devicons',
+        },
+        config = function()
+          require('trouble').setup({
+            icons = true,
+          })
+        end,
+      },
+
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
     },
@@ -184,6 +197,7 @@ require('lazy').setup({
       "MunifTanjim/nui.nvim",
     },
     config = function()
+      vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
       require('neo-tree').setup {}
     end,
   },
@@ -204,6 +218,19 @@ require('lazy').setup({
       'nvim-lua/plenary.nvim'
     },
   },
+
+  {
+    -- Transparent windows on demand!
+    "xiyaowong/transparent.nvim",
+    config = function()
+      require('transparent').setup(
+        {
+          extra_groups = { 'NormalFloat' },
+        }
+      )
+    end,
+  },
+
 
   -- Autoformat (smart)
   require '0xDmtri.plugins.autoformat',

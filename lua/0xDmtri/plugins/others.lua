@@ -11,8 +11,7 @@ M.lualine = {
 
 M.dracula = {
     soft = false,
-    transparent = true,
-
+    transparent = false,
 }
 
 return M
