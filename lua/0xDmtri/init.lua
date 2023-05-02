@@ -203,11 +203,10 @@ require('lazy').setup({
   },
 
   {
-    -- Integrated terminal
-    'akinsho/toggleterm.nvim',
-    version = "*",
+    -- Float terminal
+    'numToStr/FTerm.nvim',
     config = function()
-      require('toggleterm').setup {}
+      require('FTerm').setup {}
     end,
   },
 
@@ -242,17 +241,6 @@ require('lazy').setup({
 
 -- ================= Load Configs =================
 
--- [[ Highlight on yank ]]
--- See `:help vim.highlight.on_yank()`
-local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
-vim.api.nvim_create_autocmd('TextYankPost', {
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-  group = highlight_group,
-  pattern = '*',
-})
-
 -- [[ Configure Harpoon ]]
 require('0xDmtri.plugins.harpoon')
 
@@ -264,3 +252,9 @@ require('0xDmtri.plugins.treesitter')
 
 -- [[ Configure LSP ]]
 require('0xDmtri.plugins.lsp')
+
+-- [[ Configure Neo Tree]]
+require('0xDmtri.plugins.neo-tree')
+
+-- [[ Configure FTerm ]]
+require('0xDmtri.plugins.fterm')
