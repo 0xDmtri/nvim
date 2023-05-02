@@ -14,9 +14,11 @@
 
 --]]
 --
--- [[ Configure Default Remappings and General Settings]]
-require('0xDmtri.set')
-require('0xDmtri.remap')
+-- [[ Configure Core Settings]]
+
+-- Load default Keymaps, Settings and Colorscheme
+require('0xDmtri.core.set')
+require('0xDmtri.core.remap')
 
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
@@ -93,7 +95,7 @@ require('lazy').setup({
     name = 'dracula',
     priority = 1000,
     opts = function()
-      return require('0xDmtri.configs.others').dracula
+      return require('0xDmtri.plugins.others').dracula
     end,
     config = function(_, opts)
       require('dracula').setup(opts)
@@ -105,7 +107,7 @@ require('lazy').setup({
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     opts = function()
-      return require('0xDmtri.configs.others').lualine
+      return require('0xDmtri.plugins.others').lualine
     end,
     config = function(_, opts)
       require('lualine').setup(opts)
@@ -160,7 +162,7 @@ require('lazy').setup({
     },
     ft = { 'rust' },
     config = function()
-      require "0xDmtri.configs.ftplugin.rust"
+      require "0xDmtri.plugins.ftplugin.rust"
     end,
   },
 
@@ -225,13 +227,13 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- [[ Configure Harpoon ]]
-require('0xDmtri.configs.harpoon')
+require('0xDmtri.plugins.harpoon')
 
 -- [[ Configure Telescope ]]
-require('0xDmtri.configs.telescope')
+require('0xDmtri.plugins.telescope')
 
 -- [[ Configure Treesitter ]]
-require('0xDmtri.configs.treesitter')
+require('0xDmtri.plugins.treesitter')
 
 -- [[ Configure LSP ]]
-require('0xDmtri.configs.lsp')
+require('0xDmtri.plugins.lsp')
