@@ -9,11 +9,6 @@ M.lualine = {
     },
 }
 
-M.dracula = {
-    soft = false,
-    transparent = false,
-}
-
 M.rose_pine = {
     variant = 'auto',
     dark_variant = 'main',

@@ -59,6 +59,10 @@ require('lazy').setup({
       -- Useful status updates for LSP
       {
         'j-hui/fidget.nvim',
+        dependencies = {
+          "xiyaowong/transparent.nvim",
+        },
+        -- lil hack to set blend to 0 if transparent and vice versa
         opts = function()
           if vim.g.transparent_enabled then
             return { window = { blend = 0 } }
@@ -112,20 +116,6 @@ require('lazy').setup({
       },
     },
   },
-
-  -- {
-  --   -- Theme
-  --   'maxmx03/dracula.nvim',
-  --   name = 'dracula',
-  --   priority = 1000,
-  --   opts = function()
-  --     return require('0xDmtri.plugins.others').dracula
-  --   end,
-  --   config = function(_, opts)
-  --     require('dracula').setup(opts)
-  --     vim.cmd.colorscheme 'dracula'
-  --   end,
-  -- },
 
   {
     'rose-pine/neovim',
