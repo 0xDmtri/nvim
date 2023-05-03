@@ -57,8 +57,19 @@ require('lazy').setup({
       'williamboman/mason-lspconfig.nvim',
 
       -- Useful status updates for LSP
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim',       opts = {} },
+      {
+        'j-hui/fidget.nvim',
+        opts = function()
+          if vim.g.transparent_enabled then
+            return { window = { blend = 0 } }
+          else
+            return { window = { blend = 100 } }
+          end
+        end,
+        config = function(_, opts)
+          require('fidget').setup(opts)
+        end
+      },
 
       {
         -- Better errors
@@ -102,23 +113,37 @@ require('lazy').setup({
     },
   },
 
+  -- {
+  --   -- Theme
+  --   'maxmx03/dracula.nvim',
+  --   name = 'dracula',
+  --   priority = 1000,
+  --   opts = function()
+  --     return require('0xDmtri.plugins.others').dracula
+  --   end,
+  --   config = function(_, opts)
+  --     require('dracula').setup(opts)
+  --     vim.cmd.colorscheme 'dracula'
+  --   end,
+  -- },
+
   {
-    -- Theme
-    'maxmx03/dracula.nvim',
-    name = 'dracula',
+    'rose-pine/neovim',
+    name = 'rose-pine',
     priority = 1000,
     opts = function()
-      return require('0xDmtri.plugins.others').dracula
+      return require('0xDmtri.plugins.others').rose_pine
     end,
     config = function(_, opts)
-      require('dracula').setup(opts)
-      vim.cmd.colorscheme 'dracula'
+      require('rose-pine').setup(opts)
+      vim.cmd.colorscheme 'rose-pine'
     end,
   },
 
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
+    event = 'ColorScheme',
     opts = function()
       return require('0xDmtri.plugins.others').lualine
     end,
