@@ -212,6 +212,16 @@ require('lazy').setup({
   },
 
   {
+    -- Crates helper
+    'saecki/crates.nvim',
+    name = 'crates',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      require('crates').setup()
+    end,
+  },
+
+  {
     -- Auto matching brackers
     "windwp/nvim-autopairs",
     config = function()
