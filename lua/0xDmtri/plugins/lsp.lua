@@ -33,32 +33,49 @@ local on_attach = function(_, bufnr)
         vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
     end
 
-    nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+    nmap('gr', '<cmd>Lspsaga lsp_finder<CR>', '[G]oto [R]eferences')
+    nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+    nmap('gd', '<cmd>Lspsaga peek_definition<CR>', '[G]oto [D]efinition')
     nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-
-    nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-    nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+    nmap('<leader>rn', '<cmd>Lspsaga rename<CR>', '[R]e[n]ame')
+    nmap('<leader>d', '<cmd>Lspsage show_cursor_diagnostics<CR>', '[D]iagnostics')
     nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
     nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-    nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-    nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+    nmap('<leader>ss', require('telescope.builtin').lsp_document_symbols, '[S]earch document [S]ymbols')
 
     -- See `:help K` for why this keymap
     nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-    -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+    nmap('<C-s>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
+    -- NOTE: not gonna use workspace for now
     -- Lesser used LSP functionality
-    nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-    nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-    nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-    nmap('<leader>wl', function()
-        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    end, '[W]orkspace [L]ist Folders')
+    -- nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+    -- nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
+    -- nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
+    -- nmap('<leader>wl', function()
+    --     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    -- end, '[W]orkspace [L]ist Folders')
 
     -- Create a command `:Format` local to the LSP buffer
     vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
         vim.lsp.buf.format()
     end, { desc = 'Format current buffer with LSP' })
+
+    -- LSP Saga setup
+    local saga = require('lspsaga')
+
+    saga.setup({
+        move_in_saga = {
+            prev = "<C-k>",
+            next = "<C-j>",
+        },
+        finder_action_keys = {
+            open = "<CR>",
+        },
+        definition_action_keys = {
+            edit = "<CR>",
+        },
+    })
 end
 
 
@@ -107,11 +124,12 @@ cmp.setup {
         end,
     },
     mapping = cmp.mapping.preset.insert {
-        ['<C-n>'] = cmp.mapping.select_next_item(),
-        ['<C-p>'] = cmp.mapping.select_prev_item(),
-        ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-j>'] = cmp.mapping.select_next_item(),
+        ['<C-k>'] = cmp.mapping.select_prev_item(),
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete {},
+        ['<C-x>'] = cmp.mapping.abort(),
         ['<CR>'] = cmp.mapping.confirm {
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
@@ -138,5 +156,7 @@ cmp.setup {
     sources = {
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
+        { name = 'buffer' },
+        { name = 'path' },
     },
 }

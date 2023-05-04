@@ -78,7 +78,7 @@ require('lazy').setup({
       {
         -- Better errors
         "folke/trouble.nvim",
-        dependecies = {
+        dependencies = {
           'nvim-tree/nvim-web-devicons',
         },
         config = function()
@@ -88,8 +88,25 @@ require('lazy').setup({
         end,
       },
 
-      -- Additional lua configuration, makes nvim stuff amazing!
-      'folke/neodev.nvim',
+      {
+        -- Additional lua configuration, makes nvim stuff amazing!
+        'folke/neodev.nvim',
+      },
+
+      {
+        -- LSP Enhance Plugin
+        "glepnir/lspsaga.nvim",
+        name = 'lspsaga',
+        event = "LspAttach",
+        config = function()
+          require("lspsaga").setup({})
+        end,
+        dependencies = {
+          { "nvim-tree/nvim-web-devicons" },
+          --Please make sure you install markdown and markdown_inline parser
+          { "nvim-treesitter/nvim-treesitter" }
+        }
+      },
     },
   },
 

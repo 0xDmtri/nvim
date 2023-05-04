@@ -1,19 +1,5 @@
 -- LSP mappings
-local keymap_opts = { buffer = buffer }
-
 local rt = require("rust-tools")
-
--- Code navigation and shortcuts
-vim.keymap.set("n", "<c-]>", vim.lsp.buf.definition, keymap_opts)
-vim.keymap.set("n", "K", vim.lsp.buf.hover, keymap_opts)
-vim.keymap.set("n", "gD", vim.lsp.buf.implementation, keymap_opts)
-vim.keymap.set("n", "<c-k>", vim.lsp.buf.signature_help, keymap_opts)
-vim.keymap.set("n", "1gD", vim.lsp.buf.type_definition, keymap_opts)
-vim.keymap.set("n", "gr", vim.lsp.buf.references, keymap_opts)
-vim.keymap.set("n", "g0", vim.lsp.buf.document_symbol, keymap_opts)
-vim.keymap.set("n", "gW", vim.lsp.buf.workspace_symbol, keymap_opts)
-vim.keymap.set("n", "gd", vim.lsp.buf.definition, keymap_opts)
-vim.keymap.set("n", "<leader>fm", vim.lsp.buf.format, keymap_opts)
 
 local opts = {
   tools = {
@@ -29,6 +15,10 @@ local opts = {
 
     -- automatically call RustReloadWorkspace when writing to a Cargo.toml file.
     reload_workspace_from_cargo_toml = true,
+
+    runnables = {
+      use_telescope = true,
+    },
 
     -- These apply to the default RustSetInlayHints command
     inlay_hints = {
@@ -71,16 +61,7 @@ local opts = {
     hover_actions = {
       -- the border that is used for the hover window
       -- see vim.api.nvim_open_win()
-      border = {
-        { "╭", "FloatBorder" },
-        { "─", "FloatBorder" },
-        { "╮", "FloatBorder" },
-        { "│", "FloatBorder" },
-        { "╯", "FloatBorder" },
-        { "─", "FloatBorder" },
-        { "╰", "FloatBorder" },
-        { "│", "FloatBorder" },
-      },
+      border = "rounded",
 
       -- Maximal width of the hover window. Nil means no max.
       max_width = nil,
@@ -91,83 +72,6 @@ local opts = {
       -- whether the hover action window gets automatically focused
       -- default: false
       auto_focus = false,
-    },
-
-    -- settings for showing the crate graph based on graphviz and the dot
-    -- command
-    crate_graph = {
-      -- Backend used for displaying the graph
-      -- see: https://graphviz.org/docs/outputs/
-      -- default: x11
-      backend = "x11",
-      -- where to store the output, nil for no output stored (relative
-      -- path from pwd)
-      -- default: nil
-      output = nil,
-      -- true for all crates.io and external crates, false only the local
-      -- crates
-      -- default: true
-      full = true,
-
-      -- List of backends found on: https://graphviz.org/docs/outputs/
-      -- Is used for input validation and autocompletion
-      -- Last updated: 2021-08-26
-      enabled_graphviz_backends = {
-        "bmp",
-        "cgimage",
-        "canon",
-        "dot",
-        "gv",
-        "xdot",
-        "xdot1.2",
-        "xdot1.4",
-        "eps",
-        "exr",
-        "fig",
-        "gd",
-        "gd2",
-        "gif",
-        "gtk",
-        "ico",
-        "cmap",
-        "ismap",
-        "imap",
-        "cmapx",
-        "imap_np",
-        "cmapx_np",
-        "jpg",
-        "jpeg",
-        "jpe",
-        "jp2",
-        "json",
-        "json0",
-        "dot_json",
-        "xdot_json",
-        "pdf",
-        "pic",
-        "pct",
-        "pict",
-        "plain",
-        "plain-ext",
-        "png",
-        "pov",
-        "ps",
-        "ps2",
-        "psd",
-        "sgi",
-        "svg",
-        "svgz",
-        "tga",
-        "tiff",
-        "tif",
-        "tk",
-        "vml",
-        "vmlz",
-        "wbmp",
-        "webp",
-        "xlib",
-        "x11",
-      },
     },
   },
 
@@ -180,9 +84,21 @@ local opts = {
     standalone = true,
 
     on_attach = function(_, bufnr)
+      -- Code navigation and shortcuts
       vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
       vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
     end,
+
+    settings = {
+      ['rust-analyzer'] = {
+        lens = {
+          enable = true,
+        },
+        checkOnSave = {
+          enable = true,
+        }
+      }
+    }
   }, -- rust-analyzer options
 
   -- debugging stuff
