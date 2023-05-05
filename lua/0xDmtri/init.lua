@@ -46,8 +46,7 @@ require('lazy').setup({
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
-  -- NOTE: This is where your plugins related to LSP can be installed.
-  --  The configuration is done below. Search for lspconfig to find it below.
+  -- LSP
   {
     -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
@@ -211,18 +210,18 @@ require('lazy').setup({
     end,
   },
 
-  {
-    -- Better errors
-    "folke/trouble.nvim",
-    dependencies = {
-      'nvim-tree/nvim-web-devicons',
-    },
-    config = function()
-      require('trouble').setup({
-        icons = true,
-      })
-    end,
-  },
+  -- {
+  --   -- Better errors
+  --   "folke/trouble.nvim",
+  --   dependencies = {
+  --     'nvim-tree/nvim-web-devicons',
+  --   },
+  --   config = function()
+  --     require('trouble').setup({
+  --       icons = true,
+  --     })
+  --   end,
+  -- },
 
   {
     -- Auto matching brackers
