@@ -11,15 +11,12 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 -- greatest remap ever
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
--- -- next greatest remap ever : asbjornHaland
--- vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
--- vim.keymap.set("n", "<leader>Y", [["+Y]])
+-- next greatest remap ever : asbjornHaland
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
+vim.keymap.set("n", "<leader>Y", [["+Y]])
 
 -- Fuck this shitty shit
 vim.keymap.set("n", "Q", "<nop>")
 
--- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message" })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Go to next diagnostic message" })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = "Open floating diagnostic message" })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = "Open diagnostics list" })
+-- Fuck that shit too
+vim.keymap.set("n", "q", "<nop>")

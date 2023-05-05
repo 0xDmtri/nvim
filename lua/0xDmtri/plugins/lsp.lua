@@ -33,17 +33,23 @@ local on_attach = function(_, bufnr)
         vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
     end
 
+    -- LSP keymap
     nmap('gr', '<cmd>Lspsaga lsp_finder<CR>', '[G]oto [R]eferences')
     nmap('gd', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
     nmap('gD', '<cmd>Lspsaga peek_definition<CR>', '[G]oto [D]efinition')
     nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-    nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+    nmap('<leader>ca', '<cmd>Lspsaga code_action<CR>', '[C]ode [A]ction')
     nmap('<leader>rn', '<cmd>Lspsaga rename<CR>', '[R]e[n]ame')
-    nmap('<leader>d', '<cmd>Lspsaga show_cursor_diagnostics<CR>', '[D]iagnostics')
-    nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
+    nmap('<leader>d', '<cmd>Lspsaga peek_type_definition<CR>', 'Type [D]efinition')
     nmap('<leader>ss', require('telescope.builtin').lsp_document_symbols, '[S]earch document [S]ymbols')
-    nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+    nmap('K', '<cmd>Lspsaga hover_doc<CR>', 'Hover Documentation')
     nmap('<C-s>', vim.lsp.buf.signature_help, 'Signature Documentation')
+
+    -- Diagnostic keymaps
+    nmap('<leader>D', '<cmd>Lspsaga show_cursor_diagnostics<CR>', '[D]iagnostics')
+    nmap('[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', 'Go to prev diagnostic msg')
+    nmap(']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', 'Go to next diagnostic msg')
+    nmap('<leader>q', '<cmd>Lspsaga show_buf_diagnostics<CR>', 'Open diagnostic list')
 
     -- NOTE: not gonna use workspace for now
     -- Lesser used LSP functionality
