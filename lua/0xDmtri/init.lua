@@ -75,39 +75,27 @@ require('lazy').setup({
         end
       },
 
-      {
-        -- Better errors
-        "folke/trouble.nvim",
-        dependencies = {
-          'nvim-tree/nvim-web-devicons',
-        },
-        config = function()
-          require('trouble').setup({
-            icons = true,
-          })
-        end,
-      },
+      "nvimdev/lspsaga.nvim",
 
-      {
-        -- Additional lua configuration, makes nvim stuff amazing!
-        'folke/neodev.nvim',
-      },
+      -- Additional lua configuration, makes nvim stuff amazing!
+      'folke/neodev.nvim',
 
-      {
-        -- LSP Enhance Plugin
-        "nvimdev/lspsaga.nvim",
-        name = 'lspsaga',
-        event = "LspAttach",
-        config = function()
-          require("lspsaga").setup({})
-        end,
-        dependencies = {
-          { "nvim-tree/nvim-web-devicons" },
-          --Please make sure you install markdown and markdown_inline parser
-          { "nvim-treesitter/nvim-treesitter" }
-        }
-      },
     },
+  },
+
+  {
+    -- LSP Enhance Plugin
+    "nvimdev/lspsaga.nvim",
+    name = 'lspsaga',
+    event = "LspAttach",
+    config = function()
+      require("lspsaga").setup({})
+    end,
+    dependencies = {
+      { "nvim-tree/nvim-web-devicons" },
+      --Please make sure you install markdown and markdown_inline parser
+      { "nvim-treesitter/nvim-treesitter" }
+    }
   },
 
   {
@@ -202,6 +190,7 @@ require('lazy').setup({
     dependencies = {
       'neovim/nvim-lspconfig',
       'nvim-lua/plenary.nvim',
+      'nvimdev/lspsaga.nvim',
     },
     ft = { 'rust' },
     opts = function()
@@ -219,6 +208,19 @@ require('lazy').setup({
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
       require('crates').setup()
+    end,
+  },
+
+  {
+    -- Better errors
+    "folke/trouble.nvim",
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+    },
+    config = function()
+      require('trouble').setup({
+        icons = true,
+      })
     end,
   },
 

@@ -21,7 +21,7 @@ local opts = {
   server = {
     -- standalone file support
     -- setting it to false may improve startup time
-    standalone = true,
+    standalone = false,
 
     on_attach = function(_, bufnr)
       local nmap = function(keys, func, desc)
@@ -34,40 +34,24 @@ local opts = {
 
       -- LSP general keymaps
       nmap('gr', '<cmd>Lspsaga lsp_finder<CR>', '[G]oto [R]eferences')
-      nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-      nmap('gd', '<cmd>Lspsaga peek_definition<CR>', '[G]oto [D]efinition')
-      nmap('<leader>rn', '<cmd>Lspsaga rename<CR>', '[R]e[n]ame')
-      nmap('<leader>d', '<cmd>Lspsage show_cursor_diagnostics<CR>', '[D]iagnostics')
+      nmap('gd', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+      nmap('gD', '<cmd>Lspsaga peek_definition<CR>', '[G]oto [D]efinition')
       nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
+      nmap('<leader>rn', '<cmd>Lspsaga rename<CR>', '[R]e[n]ame')
+      nmap('<leader>d', '<cmd>Lspsaga show_cursor_diagnostics<CR>', '[D]iagnostics')
       nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
       nmap('<leader>ss', require('telescope.builtin').lsp_document_symbols, '[S]earch document [S]ymbols')
       nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
       nmap('<C-s>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
       -- Rust Specific keymaps
-      nmap('<leader-a>', rt.hover_actions.hover_actions, 'Hover Actions')
+      nmap('<leader>a', rt.hover_actions.hover_actions, 'Hover Actions')
       nmap('<leader>ca', rt.code_action_group.code_action_group, '[C]ode [A]ction')
 
       -- Create a command `:Format` local to the LSP buffer
       vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
         vim.lsp.buf.format()
       end, { desc = 'Format current buffer with LSP' })
-
-      -- LSP Saga setup
-      local saga = require('lspsaga')
-
-      saga.setup({
-        move_in_saga = {
-          prev = "<C-k>",
-          next = "<C-j>",
-        },
-        finder_action_keys = {
-          open = "<CR>",
-        },
-        definition_action_keys = {
-          edit = "<CR>",
-        },
-      })
     end,
 
     settings = {
