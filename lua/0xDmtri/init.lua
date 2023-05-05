@@ -95,7 +95,7 @@ require('lazy').setup({
 
       {
         -- LSP Enhance Plugin
-        "glepnir/lspsaga.nvim",
+        "nvimdev/lspsaga.nvim",
         name = 'lspsaga',
         event = "LspAttach",
         config = function()
@@ -181,8 +181,6 @@ require('lazy').setup({
   -- requirements installed.
   {
     'nvim-telescope/telescope-fzf-native.nvim',
-    -- NOTE: If you are having trouble with this installation,
-    --       refer to the README for telescope-fzf-native for more instructions.
     build = 'make',
     cond = function()
       return vim.fn.executable 'make' == 1
@@ -206,8 +204,11 @@ require('lazy').setup({
       'nvim-lua/plenary.nvim',
     },
     ft = { 'rust' },
-    config = function()
-      require "0xDmtri.plugins.ftplugin.rust"
+    opts = function()
+      return require('0xDmtri.plugins.ftplugin.rust')
+    end,
+    config = function(_, opts)
+      require('rust-tools').setup(opts)
     end,
   },
 

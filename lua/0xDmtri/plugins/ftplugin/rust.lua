@@ -9,69 +9,9 @@ local opts = {
     -- options right now: termopen / quickfix
     executor = require("rust-tools.executors").termopen,
 
-    -- callback to execute once rust-analyzer is done initializing the workspace
-    -- The callback receives one parameter indicating the `health` of the server: "ok" | "warning" | "error"
-    on_initialized = nil,
-
-    -- automatically call RustReloadWorkspace when writing to a Cargo.toml file.
-    reload_workspace_from_cargo_toml = true,
-
+    -- runnables
     runnables = {
       use_telescope = true,
-    },
-
-    -- These apply to the default RustSetInlayHints command
-    inlay_hints = {
-      -- automatically set inlay hints (type hints)
-      -- default: true
-      auto = true,
-
-      -- Only show inlay hints for the current line
-      only_current_line = false,
-
-      -- whether to show parameter hints with the inlay hints or not
-      -- default: true
-      show_parameter_hints = true,
-
-      -- prefix for parameter hints
-      -- default: "<-"
-      parameter_hints_prefix = "<- ",
-
-      -- prefix for all the other hints (type, chaining)
-      -- default: "=>"
-      other_hints_prefix = "=> ",
-
-      -- whether to align to the length of the longest line in the file
-      max_len_align = false,
-
-      -- padding from the left if max_len_align is true
-      max_len_align_padding = 1,
-
-      -- whether to align to the extreme right or not
-      right_align = false,
-
-      -- padding from the right if right_align is true
-      right_align_padding = 7,
-
-      -- The color of the hints
-      highlight = "Comment",
-    },
-
-    -- options same as lsp hover / vim.lsp.util.open_floating_preview()
-    hover_actions = {
-      -- the border that is used for the hover window
-      -- see vim.api.nvim_open_win()
-      border = "rounded",
-
-      -- Maximal width of the hover window. Nil means no max.
-      max_width = nil,
-
-      -- Maximal height of the hover window. Nil means no max.
-      max_height = nil,
-
-      -- whether the hover action window gets automatically focused
-      -- default: false
-      auto_focus = false,
     },
   },
 
@@ -84,9 +24,50 @@ local opts = {
     standalone = true,
 
     on_attach = function(_, bufnr)
-      -- Code navigation and shortcuts
-      vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
-      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+      local nmap = function(keys, func, desc)
+        if desc then
+          desc = 'LSP: ' .. desc
+        end
+
+        vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+      end
+
+      -- LSP general keymaps
+      nmap('gr', '<cmd>Lspsaga lsp_finder<CR>', '[G]oto [R]eferences')
+      nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+      nmap('gd', '<cmd>Lspsaga peek_definition<CR>', '[G]oto [D]efinition')
+      nmap('<leader>rn', '<cmd>Lspsaga rename<CR>', '[R]e[n]ame')
+      nmap('<leader>d', '<cmd>Lspsage show_cursor_diagnostics<CR>', '[D]iagnostics')
+      nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
+      nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
+      nmap('<leader>ss', require('telescope.builtin').lsp_document_symbols, '[S]earch document [S]ymbols')
+      nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+      nmap('<C-s>', vim.lsp.buf.signature_help, 'Signature Documentation')
+
+      -- Rust Specific keymaps
+      nmap('<leader-a>', rt.hover_actions.hover_actions, 'Hover Actions')
+      nmap('<leader>ca', rt.code_action_group.code_action_group, '[C]ode [A]ction')
+
+      -- Create a command `:Format` local to the LSP buffer
+      vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+        vim.lsp.buf.format()
+      end, { desc = 'Format current buffer with LSP' })
+
+      -- LSP Saga setup
+      local saga = require('lspsaga')
+
+      saga.setup({
+        move_in_saga = {
+          prev = "<C-k>",
+          next = "<C-j>",
+        },
+        finder_action_keys = {
+          open = "<CR>",
+        },
+        definition_action_keys = {
+          edit = "<CR>",
+        },
+      })
     end,
 
     settings = {
@@ -111,4 +92,4 @@ local opts = {
   },
 }
 
-require('rust-tools').setup(opts)
+return opts
