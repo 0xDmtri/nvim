@@ -23,6 +23,9 @@ local servers = {
 -- LSP settings.
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
+    -- disable semanticTokensProvider which is not working great
+    -- client.server_capabilities.semanticTokensProvider = nil
+
     -- We create a function that lets us more easily define mappings specific
     -- for LSP related items. It sets the mode, buffer and description for us each time.
     local nmap = function(keys, func, desc)
@@ -79,14 +82,6 @@ local mason_lspconfig = require 'mason-lspconfig'
 
 mason_lspconfig.setup {
     ensure_installed = vim.tbl_keys(servers),
-
-    -- disable semanticTokensProvider which is not working great
-    vim.api.nvim_create_autocmd("LspAttach", {
-        callback = function(args)
-            local client = vim.lsp.get_client_by_id(args.data.client_id)
-            client.server_capabilities.semanticTokensProvider = nil
-        end,
-    }),
 }
 
 mason_lspconfig.setup_handlers {
