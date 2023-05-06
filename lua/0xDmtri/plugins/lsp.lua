@@ -27,6 +27,14 @@ lsp.configure('lua_ls', {
     }
 })
 
+-- setup solidity server from VSCode
+lsp.use('solidity', {
+    cmd = { 'nomicfoundation-solidity-language-server', '--stdio' },
+    filetypes = { 'solidity' },
+    root_dir = require("lspconfig.util").root_pattern('foundry.toml'),
+    single_file_support = true,
+})
+
 -- don't initialize this language server
 -- we will use rust-tools to setup rust_analyzer
 lsp.skip_server_setup({ 'rust_analyzer' })
