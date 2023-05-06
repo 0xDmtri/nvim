@@ -48,12 +48,18 @@ require('lazy').setup({
 
   -- LSP
   {
-    -- LSP Configuration & Plugins
-    'neovim/nvim-lspconfig',
+    'VonHeikemen/lsp-zero.nvim',
+    branch = 'v2.x',
     dependencies = {
-      -- Automatically install LSPs to stdpath for neovim
-      { 'williamboman/mason.nvim', config = true },
-      'williamboman/mason-lspconfig.nvim',
+      -- LSP Support
+      { 'neovim/nvim-lspconfig' },
+      { 'williamboman/mason.nvim',          config = true },
+      { 'williamboman/mason-lspconfig.nvim' },
+
+      -- Autocompletion
+      { 'hrsh7th/nvim-cmp' },
+      { 'hrsh7th/cmp-nvim-lsp' },
+      { 'L3MON4D3/LuaSnip' },
 
       -- Useful status updates for LSP
       {
@@ -74,12 +80,13 @@ require('lazy').setup({
         end
       },
 
-      "nvimdev/lspsaga.nvim",
-
+      -- NOTE: can't figure out how to make it work properly just yet :(
       -- Additional lua configuration, makes nvim stuff amazing!
-      'folke/neodev.nvim',
+      -- 'folke/neodev.nvim',
 
-    },
+      -- Enhance LSP experience
+      "nvimdev/lspsaga.nvim",
+    }
   },
 
   {
@@ -195,12 +202,6 @@ require('lazy').setup({
       'nvimdev/lspsaga.nvim',
     },
     ft = { 'rust' },
-    opts = function()
-      return require('0xDmtri.plugins.ftplugin.rust')
-    end,
-    config = function(_, opts)
-      require('rust-tools').setup(opts)
-    end,
   },
 
   {
