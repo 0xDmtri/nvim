@@ -95,7 +95,7 @@ require('lazy').setup({
     name = 'lspsaga',
     event = "LspAttach",
     opts = function()
-      return require('0xDmtri.plugins.saga')
+      return require('0xDmtri.plugins.configs.saga')
     end,
     config = function(opts)
       require("lspsaga").setup(opts)
@@ -136,7 +136,7 @@ require('lazy').setup({
     name = 'rose-pine',
     priority = 1000,
     opts = function()
-      return require('0xDmtri.plugins.others').rose_pine
+      return require('0xDmtri.plugins.configs.others').rose_pine
     end,
     config = function(_, opts)
       require('rose-pine').setup(opts)
@@ -149,7 +149,7 @@ require('lazy').setup({
     'nvim-lualine/lualine.nvim',
     event = 'ColorScheme',
     opts = function()
-      return require('0xDmtri.plugins.others').lualine
+      return require('0xDmtri.plugins.configs.others').lualine
     end,
     config = function(_, opts)
       require('lualine').setup(opts)
@@ -279,19 +279,19 @@ require('lazy').setup({
 -- ================= Load Configs =================
 
 -- [[ Configure Harpoon ]]
-require('0xDmtri.plugins.harpoon')
+require('0xDmtri.plugins.configs.harpoon')
 
 -- [[ Configure Telescope ]]
-require('0xDmtri.plugins.telescope')
+require('0xDmtri.plugins.configs.telescope')
 
 -- [[ Configure Treesitter ]]
-require('0xDmtri.plugins.treesitter')
+require('0xDmtri.plugins.configs.treesitter')
 
 -- [[ Configure LSP ]]
-require('0xDmtri.plugins.lsp')
+require('0xDmtri.plugins.configs.telescope')
 
 -- [[ Configure Neo Tree]]
-require('0xDmtri.plugins.neo-tree')
+require('0xDmtri.plugins.configs.neotree')
 
 -- [[ Configure FTerm ]]
-require('0xDmtri.plugins.fterm')
+require('0xDmtri.plugins.configs.fterm')
