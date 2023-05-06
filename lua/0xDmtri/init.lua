@@ -87,8 +87,11 @@ require('lazy').setup({
     "nvimdev/lspsaga.nvim",
     name = 'lspsaga',
     event = "LspAttach",
-    config = function()
-      require("lspsaga").setup({})
+    opts = function()
+      return require('0xDmtri.plugins.saga')
+    end,
+    config = function(opts)
+      require("lspsaga").setup(opts)
     end,
     dependencies = {
       { "nvim-tree/nvim-web-devicons" },
@@ -209,19 +212,6 @@ require('lazy').setup({
       require('crates').setup()
     end,
   },
-
-  -- {
-  --   -- Better errors
-  --   "folke/trouble.nvim",
-  --   dependencies = {
-  --     'nvim-tree/nvim-web-devicons',
-  --   },
-  --   config = function()
-  --     require('trouble').setup({
-  --       icons = true,
-  --     })
-  --   end,
-  -- },
 
   {
     -- Auto matching brackers
