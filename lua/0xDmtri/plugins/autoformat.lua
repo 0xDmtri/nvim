@@ -48,6 +48,10 @@ return {
           return
         end
 
+        -- if client.name == 'solidity' then
+        --   return
+        -- end
+
         -- Create an autocmd that will run *before* we save the buffer.
         --  Run the formatting command for the LSP that has just attached.
         vim.api.nvim_create_autocmd('BufWritePre', {
@@ -57,10 +61,6 @@ return {
             if not format_is_enabled then
               return
             end
-
-            -- if client.name == 'solidity' then
-            --   return
-            -- end
 
             vim.lsp.buf.format {
               async = false,

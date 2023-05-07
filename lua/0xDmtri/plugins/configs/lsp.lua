@@ -35,6 +35,24 @@ lsp.use('solidity', {
     single_file_support = true,
 })
 
+-- setup remappings for solidity ls
+lsp.configure('solidity', {
+    settings = {
+        solidity = {
+            includePath = "",
+            remapping = {
+                ['forge-std/'] = 'lib/forge-std/src/',
+                ['solady/'] = 'lib/solady/src/',
+                ['solmate/'] = 'lib/solmate/src/',
+                ['zodiac'] = 'lib/zodiac/contract/',
+                ['safe-tools/'] = 'lib/safe-tools/src/',
+                ['@openzeppelin/'] = 'lib/openzeppelin-contracts/',
+                ['openzeppelin-contracts/'] = 'lib/openzeppelin-contracts',
+            }
+        }
+    }
+})
+
 -- don't initialize this language server
 -- we will use rust-tools to setup rust_analyzer
 lsp.skip_server_setup({ 'rust_analyzer' })
