@@ -103,13 +103,28 @@ lsp.setup()
 -- initialize rust_analyzer with rust_tools
 local rust_lsp = lsp.build_options('rust_analyzer', {
     single_file_support = false,
+
+    settings = {
+        ['rust-analyzer'] = {
+            lens = {
+                enable = true,
+            },
+            checkOnSave = {
+                enable = true,
+            }
+        }
+    },
+
     on_attach = function(_, bufnr)
         print('Lets get Rusty!')
 
         -- Rust Specific keymaps
-        nmap(bufnr, '<leader>a', require('rust-tools').hover_actions.hover_actions, 'Hover Actions')
-        nmap(bufnr, '<leader>ca', require('rust-tools').code_action_group.code_action_group, '[C]ode [A]ction')
-        nmap(bufnr, '<leader>rr', '<cmd>RustRunnables<CR>', '[R]ust [R]unnables')
+        nmap(bufnr, '<leader>a', require('rust-tools').hover_actions.hover_actions, 'LSP: [A]ctions Hover')
+        nmap(bufnr, '<leader>ca', require('rust-tools').code_action_group.code_action_group, 'LSP: [C]ode [A]ction')
+        nmap(bufnr, '<leader>cr', '<cmd>RustRunnables<CR>', '[C]argo [R]unnables')
+        nmap(bufnr, '<leader>ct', '<cmd>lua _CARGO_TEST()<cr>', '[C]argo [T]est')
+        nmap(bufnr, '<leader>cp', '<cmd>lua require("crates").show_popup()<cr>', 'LSP: [C]rates [P]opup')
+        nmap(bufnr, '<leader>ci', '<cmd>lua require("crates").show_crate_popup()<cr>', 'LSP: [C]rates [I]nfo')
     end
 })
 
