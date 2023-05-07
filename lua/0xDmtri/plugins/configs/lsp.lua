@@ -119,12 +119,12 @@ local rust_lsp = lsp.build_options('rust_analyzer', {
         print('Lets get Rusty!')
 
         -- Rust Specific keymaps
-        nmap(bufnr, '<leader>a', require('rust-tools').hover_actions.hover_actions, 'LSP: [A]ctions Hover')
-        nmap(bufnr, '<leader>ca', require('rust-tools').code_action_group.code_action_group, 'LSP: [C]ode [A]ction')
+        nmap(bufnr, '<leader>a', require('rust-tools').hover_actions.hover_actions, '[A]ctions Hover')
+        nmap(bufnr, '<leader>ca', require('rust-tools').code_action_group.code_action_group, '[C]ode [A]ction')
         nmap(bufnr, '<leader>cr', '<cmd>RustRunnables<CR>', '[C]argo [R]unnables')
         nmap(bufnr, '<leader>ct', '<cmd>lua _CARGO_TEST()<cr>', '[C]argo [T]est')
-        nmap(bufnr, '<leader>cp', '<cmd>lua require("crates").show_popup()<cr>', 'LSP: [C]rates [P]opup')
-        nmap(bufnr, '<leader>ci', '<cmd>lua require("crates").show_crate_popup()<cr>', 'LSP: [C]rates [I]nfo')
+        nmap(bufnr, '<leader>cp', '<cmd>lua require("crates").show_popup()<cr>', '[C]rates [P]opup')
+        nmap(bufnr, '<leader>ci', '<cmd>lua require("crates").show_crate_popup()<cr>', '[C]rates [I]nfo')
     end
 })
 
