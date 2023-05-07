@@ -288,7 +288,7 @@ require('0xDmtri.plugins.configs.telescope')
 require('0xDmtri.plugins.configs.treesitter')
 
 -- [[ Configure LSP ]]
-require('0xDmtri.plugins.configs.telescope')
+require('0xDmtri.plugins.configs.lsp')
 
 -- [[ Configure Neo Tree]]
 require('0xDmtri.plugins.configs.neotree')

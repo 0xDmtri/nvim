@@ -58,6 +58,10 @@ return {
               return
             end
 
+            -- if client.name == 'solidity' then
+            --   return
+            -- end
+
             vim.lsp.buf.format {
               async = false,
               filter = function(c)
