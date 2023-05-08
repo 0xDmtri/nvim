@@ -95,7 +95,7 @@ require('lazy').setup({
     name = 'lspsaga',
     event = "LspAttach",
     opts = function()
-      return require('0xDmtri.plugins.configs.saga')
+      return require('0xDmtri.configs.saga')
     end,
     config = function(opts)
       require("lspsaga").setup(opts)
@@ -136,7 +136,7 @@ require('lazy').setup({
     name = 'rose-pine',
     priority = 1000,
     opts = function()
-      return require('0xDmtri.plugins.configs.others').rose_pine
+      return require('0xDmtri.configs.others').rose_pine
     end,
     config = function(_, opts)
       require('rose-pine').setup(opts)
@@ -149,7 +149,7 @@ require('lazy').setup({
     'nvim-lualine/lualine.nvim',
     event = 'ColorScheme',
     opts = function()
-      return require('0xDmtri.plugins.configs.others').lualine
+      return require('0xDmtri.configs.others').lualine
     end,
     config = function(_, opts)
       require('lualine').setup(opts)
@@ -205,9 +205,6 @@ require('lazy').setup({
     name = 'crates',
     event = { "BufRead Cargo.toml" },
     dependencies = { 'nvim-lua/plenary.nvim' },
-    config = function()
-      require('crates').setup {}
-    end,
   },
 
   {
@@ -272,27 +269,25 @@ require('lazy').setup({
 
 }, {})
 
--- ================= Load Configs =================
+-- ================= Load Configs ================= --
 
 -- [[ Configure Harpoon ]]
-require('0xDmtri.plugins.configs.harpoon')
+require('0xDmtri.configs.harpoon')
 
 -- [[ Configure Telescope ]]
-require('0xDmtri.plugins.configs.telescope')
+require('0xDmtri.configs.telescope')
 
 -- [[ Configure Treesitter ]]
-require('0xDmtri.plugins.configs.treesitter')
+require('0xDmtri.configs.treesitter')
 
 -- [[ Configure LSP ]]
-require('0xDmtri.plugins.configs.lsp')
+require('0xDmtri.configs.lsp')
 
 -- [[ Configure Neo Tree]]
-require('0xDmtri.plugins.configs.neotree')
+require('0xDmtri.configs.neotree')
 
 -- [[ Configure FTerm ]]
-require('0xDmtri.plugins.configs.fterm')
+require('0xDmtri.configs.fterm')
 
--- Add keymaps specific for `Cargo.toml`
--- vim.keymap.set('i', '<cmd>lua _CARGO_TEST()<cr>', { desc = '[C]argo [T]est' })
--- vim.keymap.set('i', '<cmd>lua require("crates").show_popup()<CR>', { desc = '[C]rates [P]opup' })
--- vim.keymap.set('i', '<cmd>lua require("crates").show_crate_popup()<CR>', { desc = '[C]rates [I]nfo' })
+-- [[ Configure Crates ]]
+require('0xDmtri.configs.crates')

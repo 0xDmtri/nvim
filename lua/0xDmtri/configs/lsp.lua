@@ -121,11 +121,15 @@ local rust_lsp = lsp.build_options('rust_analyzer', {
         -- Rust Specific keymaps
         nmap(bufnr, '<leader>a', require('rust-tools').hover_actions.hover_actions, '[A]ctions Hover')
         nmap(bufnr, '<leader>ca', require('rust-tools').code_action_group.code_action_group, '[C]ode [A]ction')
-        nmap(bufnr, '<leader>cr', '<cmd>RustRunnables<CR>', '[C]argo [R]unnables')
+        nmap(bufnr, '<leader>cr', require('rust-tools').runnables.runnables, '[C]argo [R]unnables')
     end
 })
 
-require('rust-tools').setup({ server = rust_lsp })
+require('rust-tools').setup({
+    server = rust_lsp,
+    hover_actions = { auto_focus = true },
+    runnables = { use_telescope = true }
+})
 
 -- nvim-cmp setup
 local cmp = require 'cmp'
