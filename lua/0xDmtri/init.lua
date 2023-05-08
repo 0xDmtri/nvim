@@ -171,17 +171,12 @@ require('lazy').setup({
   { 'numToStr/Comment.nvim',         opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
-  { 'nvim-telescope/telescope.nvim', version = '*', dependencies = { 'nvim-lua/plenary.nvim' } },
+  { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built.
-  -- Only load if `make` is available. Make sure you have the system
-  -- requirements installed.
   {
     'nvim-telescope/telescope-fzf-native.nvim',
     build = 'make',
-    cond = function()
-      return vim.fn.executable 'make' == 1
-    end,
   },
 
   {
@@ -208,9 +203,10 @@ require('lazy').setup({
     -- Crates helper
     'saecki/crates.nvim',
     name = 'crates',
+    event = { "BufRead Cargo.toml" },
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
-      require('crates').setup()
+      require('crates').setup {}
     end,
   },
 
@@ -295,3 +291,8 @@ require('0xDmtri.plugins.configs.neotree')
 
 -- [[ Configure FTerm ]]
 require('0xDmtri.plugins.configs.fterm')
+
+-- Add keymaps specific for `Cargo.toml`
+-- vim.keymap.set('i', '<cmd>lua _CARGO_TEST()<cr>', { desc = '[C]argo [T]est' })
+-- vim.keymap.set('i', '<cmd>lua require("crates").show_popup()<CR>', { desc = '[C]rates [P]opup' })
+-- vim.keymap.set('i', '<cmd>lua require("crates").show_crate_popup()<CR>', { desc = '[C]rates [I]nfo' })
