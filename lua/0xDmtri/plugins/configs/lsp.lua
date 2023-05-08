@@ -44,7 +44,7 @@ lsp.configure('solidity', {
                 ['forge-std/'] = 'lib/forge-std/src/',
                 ['solady/'] = 'lib/solady/src/',
                 ['solmate/'] = 'lib/solmate/src/',
-                ['zodiac'] = 'lib/zodiac/contract/',
+                ['zodiac/'] = 'lib/zodiac/contract/',
                 ['safe-tools/'] = 'lib/safe-tools/src/',
                 ['@openzeppelin/'] = 'lib/openzeppelin-contracts/',
                 ['openzeppelin-contracts/'] = 'lib/openzeppelin-contracts',
@@ -122,9 +122,6 @@ local rust_lsp = lsp.build_options('rust_analyzer', {
         nmap(bufnr, '<leader>a', require('rust-tools').hover_actions.hover_actions, '[A]ctions Hover')
         nmap(bufnr, '<leader>ca', require('rust-tools').code_action_group.code_action_group, '[C]ode [A]ction')
         nmap(bufnr, '<leader>cr', '<cmd>RustRunnables<CR>', '[C]argo [R]unnables')
-        nmap(bufnr, '<leader>ct', '<cmd>lua _CARGO_TEST()<cr>', '[C]argo [T]est')
-        nmap(bufnr, '<leader>cp', '<cmd>lua require("crates").show_popup()<cr>', '[C]rates [P]opup')
-        nmap(bufnr, '<leader>ci', '<cmd>lua require("crates").show_crate_popup()<cr>', '[C]rates [I]nfo')
     end
 })
 
@@ -177,5 +174,6 @@ cmp.setup {
         { name = 'luasnip' },
         { name = 'buffer' },
         { name = 'path' },
+        { name = 'crates' },
     },
 }
