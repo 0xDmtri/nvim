@@ -20,3 +20,9 @@ vim.keymap.set("n", "Q", "<nop>")
 
 -- Fuck that shit too
 vim.keymap.set("n", "q", "<nop>")
+
+-- ctrl + h,j,k,l for insert mode
+vim.keymap.set('i', '<C-h>', '<left>')
+vim.keymap.set('i', '<C-j>', '<down>')
+vim.keymap.set('i', '<C-k>', '<up>')
+vim.keymap.set('i', '<C-l>', '<right>')
