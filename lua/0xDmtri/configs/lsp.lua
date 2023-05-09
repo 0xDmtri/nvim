@@ -42,6 +42,7 @@ lsp.configure('solidity', {
             includePath = "",
             remapping = {
                 ['forge-std/'] = 'lib/forge-std/src/',
+                ['foundry-huff/'] = 'lib/foundry-huff/src/',
                 ['solady/'] = 'lib/solady/src/',
                 ['solmate/'] = 'lib/solmate/src/',
                 ['zodiac/'] = 'lib/zodiac/contract/',
@@ -102,27 +103,33 @@ lsp.setup()
 
 -- initialize rust_analyzer with rust_tools
 local rust_lsp = lsp.build_options('rust_analyzer', {
-    single_file_support = false,
-
-    settings = {
-        ['rust-analyzer'] = {
-            lens = {
-                enable = true,
-            },
-            checkOnSave = {
-                enable = true,
-            }
-        }
-    },
-
     on_attach = function(_, bufnr)
-        print('Lets get Rusty!')
+        print('🦀')
 
         -- Rust Specific keymaps
         nmap(bufnr, '<leader>a', require('rust-tools').hover_actions.hover_actions, '[A]ctions Hover')
         nmap(bufnr, '<leader>ca', require('rust-tools').code_action_group.code_action_group, '[C]ode [A]ction')
         nmap(bufnr, '<leader>cr', require('rust-tools').runnables.runnables, '[C]argo [R]unnables')
-    end
+    end,
+
+    standalone = false,
+
+    capabilities = require('cmp_nvim_lsp').default_capabilities(),
+
+    settings = {
+        ['rust-analyzer'] = {
+            checkOnSave = {
+                command = 'clippy',
+                extraArgs = { '--all', '--', '-W', 'clippy::all' },
+            },
+            cargo = {
+                loadOutDirsFromCheck = true,
+            },
+            procMacro = {
+                enable = true,
+            },
+        }
+    }
 })
 
 require('rust-tools').setup({
