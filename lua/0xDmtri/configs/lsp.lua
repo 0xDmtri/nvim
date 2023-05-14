@@ -4,12 +4,7 @@
 -- require('neodev').setup({})
 
 -- setup LSP-ZERO
-local lsp = require('lsp-zero').preset({
-    name = 'minimal',
-    set_lsp_keymaps = false,
-    manage_nvim_cmp = true,
-    suggest_lsp_servers = false,
-})
+local lsp = require('lsp-zero').preset({})
 
 -- make sure this servers installed
 lsp.ensure_installed({
@@ -140,14 +135,12 @@ require('rust-tools').setup({
 
 -- nvim-cmp setup
 local cmp = require 'cmp'
-local luasnip = require 'luasnip'
-
-luasnip.config.setup {}
+local cmp_action = require('lsp-zero').cmp_action()
 
 cmp.setup {
     snippet = {
         expand = function(args)
-            luasnip.lsp_expand(args.body)
+            cmp_action.luasnip_lsp_expand(args.body)
         end,
     },
     mapping = cmp.mapping.preset.insert {
@@ -164,8 +157,8 @@ cmp.setup {
         ['<Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
+            elseif cmp_action.luasnip_expand_or_jumpable() then
+                cmp_action.luasnip_expand_or_jump()
             else
                 fallback()
             end
@@ -173,8 +166,8 @@ cmp.setup {
         ['<S-Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-                luasnip.jump(-1)
+            elseif cmp_action.luasnip_jumpable(-1) then
+                cmp_action.luasnip_jump(-1)
             else
                 fallback()
             end
