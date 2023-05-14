@@ -258,6 +258,14 @@ require('lazy').setup({
     end,
   },
 
+  {
+    -- Context functions while scrolling
+    'nvim-treesitter/nvim-treesitter-context',
+    config = function()
+      require('treesitter-context').setup {}
+    end,
+  },
+
   -- Huff syntax highlighting
   { "wuwe1/vim-huff", lazy = false },
 
