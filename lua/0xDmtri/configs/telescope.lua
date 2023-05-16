@@ -14,6 +14,9 @@ require('telescope').setup {
 -- Enable telescope fzf native
 require('telescope').load_extension('fzf')
 
+-- Enable harpoon
+require("telescope").load_extension('harpoon')
+
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
