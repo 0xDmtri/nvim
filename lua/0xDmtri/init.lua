@@ -276,12 +276,6 @@ require('lazy').setup({
   -- Debuggin suit
   require '0xDmtri.plugins.debug',
 
-  {
-    -- Foundry
-    dir = '/Users/dmtri/GitHub/foundry.nvim',
-    dev = true,
-  },
-
 }, {})
 
 -- ================= Load Configs ================= --
