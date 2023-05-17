@@ -52,40 +52,43 @@ require('lazy').setup({
     branch = 'v2.x',
     dependencies = {
       -- LSP Support
-      { 'neovim/nvim-lspconfig' },
-      { 'williamboman/mason.nvim',          config = true },
-      { 'williamboman/mason-lspconfig.nvim' },
+      {
+        -- plugin to config lsp
+        'neovim/nvim-lspconfig',
+        dependencies = {
+          -- Additional lua configuration, makes nvim stuff amazing!
+          'folke/neodev.nvim',
+
+          -- plugins to download remote lsp servers
+          { 'williamboman/mason.nvim',          config = true },
+          { 'williamboman/mason-lspconfig.nvim' },
+
+          -- Useful status updates for LSP
+          {
+            'j-hui/fidget.nvim',
+            dependencies = {
+              "xiyaowong/transparent.nvim",
+            },
+            -- lil hack to set blend to 0 if transparent and vice versa
+            opts = function()
+              if vim.g.transparent_enabled then
+                return { window = { blend = 0 } }
+              else
+                return { window = { blend = 100 } }
+              end
+            end,
+            config = function(_, opts)
+              require('fidget').setup(opts)
+            end
+          },
+        }
+      },
 
       -- Autocompletion
       { 'hrsh7th/nvim-cmp' },
       { 'hrsh7th/cmp-nvim-lsp' },
       { 'L3MON4D3/LuaSnip' },
 
-      -- Useful status updates for LSP
-      {
-        'j-hui/fidget.nvim',
-        dependencies = {
-          "xiyaowong/transparent.nvim",
-        },
-        -- lil hack to set blend to 0 if transparent and vice versa
-        opts = function()
-          if vim.g.transparent_enabled then
-            return { window = { blend = 0 } }
-          else
-            return { window = { blend = 100 } }
-          end
-        end,
-        config = function(_, opts)
-          require('fidget').setup(opts)
-        end
-      },
-
-      -- NOTE: can't figure out how to make it work properly just yet :(
-      -- Additional lua configuration, makes nvim stuff amazing!
-      -- 'folke/neodev.nvim',
-
-      -- Enhance LSP experience
-      "nvimdev/lspsaga.nvim",
     }
   },
 
@@ -102,7 +105,7 @@ require('lazy').setup({
     end,
     dependencies = {
       { "nvim-tree/nvim-web-devicons" },
-      --Please make sure you install markdown and markdown_inline parser
+      -- Please make sure you install markdown and markdown_inline parser
       { "nvim-treesitter/nvim-treesitter" }
     }
   },
@@ -159,8 +162,6 @@ require('lazy').setup({
   {
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
-    -- Enable `lukas-reineke/indent-blankline.nvim`
-    -- See `:help indent_blankline.txt`
     opts = {
       char = '┊',
       show_trailing_blankline_indent = false,
@@ -221,7 +222,7 @@ require('lazy').setup({
     branch = "v2.x",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "nvim-tree/nvim-web-devicons",
       "MunifTanjim/nui.nvim",
     },
     config = function()
@@ -274,6 +275,12 @@ require('lazy').setup({
 
   -- Debuggin suit
   require '0xDmtri.plugins.debug',
+
+  {
+    -- Foundry
+    dir = '/Users/dmtri/GitHub/foundry.nvim',
+    dev = true,
+  },
 
 }, {})
 

@@ -1,7 +1,7 @@
 -- [[ Configure LSP ]]
 
--- Setup neovim lua configuration
--- require('neodev').setup({})
+-- Setup neovim dev tools for lua
+require('neodev').setup({})
 
 -- setup LSP-ZERO
 local lsp = require('lsp-zero').preset({})
@@ -90,8 +90,9 @@ lsp.on_attach(function(_, bufnr)
     end, { desc = 'Format current buffer with LSP' })
 end)
 
+-- NOTE: not needed becase "neodev" is used
 -- configure lua language server for neovim
-lsp.nvim_workspace()
+-- lsp.nvim_workspace()
 
 -- call setup
 lsp.setup()
