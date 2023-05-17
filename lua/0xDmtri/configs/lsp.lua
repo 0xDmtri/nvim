@@ -10,6 +10,7 @@ local lsp = require('lsp-zero').preset({})
 lsp.ensure_installed({
     -- 'rust_analyzer', NOTE: Installed natively with cargo
     'lua_ls',
+    -- 'solidity_ls_nomicfoundation', -- NOTE: not available in mason-lspconfig yet
 })
 
 -- configue Lua Server
@@ -23,30 +24,9 @@ lsp.configure('lua_ls', {
 })
 
 -- setup solidity server from VSCode
-lsp.use('solidity', {
-    cmd = { 'nomicfoundation-solidity-language-server', '--stdio' },
-    filetypes = { 'solidity' },
-    root_dir = require("lspconfig.util").root_pattern('foundry.toml'),
-    single_file_support = true,
-})
-
--- setup remappings for solidity ls
-lsp.configure('solidity', {
-    settings = {
-        solidity = {
-            includePath = "",
-            remapping = {
-                ['forge-std/'] = 'lib/forge-std/src/',
-                ['foundry-huff/'] = 'lib/foundry-huff/src/',
-                ['solady/'] = 'lib/solady/src/',
-                ['solmate/'] = 'lib/solmate/src/',
-                ['zodiac/'] = 'lib/zodiac/contract/',
-                ['safe-tools/'] = 'lib/safe-tools/src/',
-                ['@openzeppelin/'] = 'lib/openzeppelin-contracts/',
-                ['openzeppelin-contracts/'] = 'lib/openzeppelin-contracts',
-            }
-        }
-    }
+lsp.setup_servers({
+    'solidity_ls_nomicfoundation',
+    opts = { root_dir = require('lspconfig.util').root_pattern('foundry.toml') }
 })
 
 -- don't initialize this language server
@@ -63,7 +43,12 @@ local nmap = function(bufnr, keys, func, desc)
 end
 
 -- LSP settings.
-lsp.on_attach(function(_, bufnr)
+lsp.on_attach(function(client, bufnr)
+    if client.name == 'solidity_ls_nomicfoundation' then
+        -- disable semanticTokensProvider which is not working great
+        client.server_capabilities.semanticTokensProvider = nil
+    end
+
     -- LSP keymap
     nmap(bufnr, 'gr', '<cmd>Lspsaga lsp_finder<CR>', '[G]oto [R]eferences')
     nmap(bufnr, 'gd', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -89,10 +74,6 @@ lsp.on_attach(function(_, bufnr)
         vim.lsp.buf.format()
     end, { desc = 'Format current buffer with LSP' })
 end)
-
--- NOTE: not needed becase "neodev" is used
--- configure lua language server for neovim
--- lsp.nvim_workspace()
 
 -- call setup
 lsp.setup()
