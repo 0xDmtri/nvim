@@ -4,13 +4,18 @@
 require('neodev').setup({})
 
 -- setup LSP-ZERO
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-zero').preset({ 'recommended' })
 
 -- make sure this servers installed
 lsp.ensure_installed({
-    -- 'rust_analyzer', NOTE: Installed natively with cargo
+    -- LSPs:
     'lua_ls',
-    -- 'solidity_ls_nomicfoundation', -- NOTE: not available in mason-lspconfig yet
+    'tsserver',
+    'solidity_ls_nomicfoundation',
+    'ruff_lsp',
+
+    -- Linters and Formaters:
+    'eslint',
 })
 
 -- configue Lua Server
@@ -21,12 +26,6 @@ lsp.configure('lua_ls', {
             telemetry = { enable = false },
         }
     }
-})
-
--- setup solidity server from VSCode
-lsp.setup_servers({
-    'solidity_ls_nomicfoundation',
-    opts = { root_dir = require('lspconfig.util').root_pattern('foundry.toml') }
 })
 
 -- don't initialize this language server
