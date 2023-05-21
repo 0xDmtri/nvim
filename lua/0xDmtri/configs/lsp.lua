@@ -73,8 +73,8 @@ lsp.on_attach(function(client, bufnr)
         vim.lsp.buf.format()
     end, { desc = 'Format current buffer with LSP' })
 
-    -- Enable autoformt
-    if client.supports_method('textDocument/formatting') then
+    -- Enable autoformt for all LSP except Solidity
+    if client.supports_method('textDocument/formatting') and client.name ~= 'solidity_ls_nomicfoundation' then
         require('lsp-format').on_attach(client)
     end
 end)
