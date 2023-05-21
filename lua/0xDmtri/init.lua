@@ -296,9 +296,6 @@ require('lazy').setup({
   -- Huff syntax highlighting
   { "wuwe1/vim-huff", lazy = false },
 
-  -- Autoformat (smart)
-  require '0xDmtri.plugins.autoformat',
-
   -- Debuggin suit
   require '0xDmtri.plugins.debug',
 

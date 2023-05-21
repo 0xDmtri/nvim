@@ -41,7 +41,7 @@ local nmap = function(bufnr, keys, func, desc)
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
 end
 
--- LSP settings.
+-- LSP settings on attach
 lsp.on_attach(function(client, bufnr)
     if client.name == 'solidity_ls_nomicfoundation' then
         -- disable semanticTokensProvider which is not working great
@@ -72,6 +72,9 @@ lsp.on_attach(function(client, bufnr)
     vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
         vim.lsp.buf.format()
     end, { desc = 'Format current buffer with LSP' })
+
+    -- Enable autoformt
+    lsp.buffer_autoformat()
 end)
 
 -- call setup
