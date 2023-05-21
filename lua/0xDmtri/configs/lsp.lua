@@ -74,7 +74,9 @@ lsp.on_attach(function(client, bufnr)
     end, { desc = 'Format current buffer with LSP' })
 
     -- Enable autoformt
-    lsp.buffer_autoformat()
+    if client.supports_method('textDocument/formatting') then
+        require('lsp-format').on_attach(client)
+    end
 end)
 
 -- call setup

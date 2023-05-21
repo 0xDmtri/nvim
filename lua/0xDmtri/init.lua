@@ -84,6 +84,11 @@ require('lazy').setup({
         }
       },
 
+      {
+        -- Better Async Formatter
+        'lukas-reineke/lsp-format.nvim',
+      },
+
       -- Autocompletion
       { 'hrsh7th/nvim-cmp' },
       { 'hrsh7th/cmp-nvim-lsp' },
