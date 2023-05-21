@@ -165,5 +165,6 @@ cmp.setup {
         { name = 'buffer' },
         { name = 'path' },
         { name = 'crates' },
+        { name = 'cmdline' },
     },
 }
