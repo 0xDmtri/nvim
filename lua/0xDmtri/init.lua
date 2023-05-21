@@ -89,7 +89,11 @@ require('lazy').setup({
       { 'hrsh7th/cmp-nvim-lsp' },
       { 'L3MON4D3/LuaSnip' },
 
-    }
+    },
+    config = function()
+      -- [[ Configure LSP ]]
+      require('0xDmtri.configs.lsp')
+    end
   },
 
   {
@@ -117,7 +121,7 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim',          opts = {} },
+  { 'folke/which-key.nvim',  opts = {} },
 
   {
     -- Adds git releated signs to the gutter, as well as utilities for managing changes
@@ -169,13 +173,21 @@ require('lazy').setup({
   },
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim',         opts = {} },
+  { 'numToStr/Comment.nvim', opts = {} },
 
-  -- Fuzzy Finder (files, lsp, etc)
-  { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
-
-  -- Fuzzy Finder Algorithm which requires local dependencies to be built.
   {
+    -- Fuzzy Finder (files, lsp, etc)
+    'nvim-telescope/telescope.nvim',
+    branch = '0.1.x',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      -- [[ Configure Telescope ]]
+      require('0xDmtri.configs.telescope')
+    end
+  },
+
+  {
+    -- Fuzzy Finder Algorithm which requires local dependencies to be built.
     'nvim-telescope/telescope-fzf-native.nvim',
     build = 'make',
   },
@@ -187,6 +199,10 @@ require('lazy').setup({
       'nvim-treesitter/nvim-treesitter-textobjects',
     },
     build = ":TSUpdate",
+    config = function()
+      -- [[ Configure Treesitter ]]
+      require('0xDmtri.configs.treesitter')
+    end
   },
 
   {
@@ -198,6 +214,7 @@ require('lazy').setup({
       'nvimdev/lspsaga.nvim',
     },
     ft = { 'rust' },
+    -- NOTE: configured inside LSP config
   },
 
   {
@@ -206,6 +223,10 @@ require('lazy').setup({
     name = 'crates',
     event = { "BufRead Cargo.toml" },
     dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      -- [[ Configure Crates ]]
+      require('0xDmtri.configs.crates')
+    end
   },
 
   {
@@ -226,8 +247,8 @@ require('lazy').setup({
       "MunifTanjim/nui.nvim",
     },
     config = function()
-      vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
-      require('neo-tree').setup {}
+      -- [[ Configure Neo Tree]]
+      require('0xDmtri.configs.neotree')
     end,
   },
 
@@ -235,7 +256,8 @@ require('lazy').setup({
     -- Float terminal
     'numToStr/FTerm.nvim',
     config = function()
-      require('FTerm').setup {}
+      -- [[ Configure FTerm ]]
+      require('0xDmtri.configs.fterm')
     end,
   },
 
@@ -245,6 +267,10 @@ require('lazy').setup({
     dependencies = {
       'nvim-lua/plenary.nvim'
     },
+    config = function()
+      -- [[ Configure Harpoon ]]
+      require('0xDmtri.configs.harpoon')
+    end,
   },
 
   {
@@ -277,26 +303,3 @@ require('lazy').setup({
   require '0xDmtri.plugins.debug',
 
 }, {})
-
--- ================= Load Configs ================= --
-
--- [[ Configure Harpoon ]]
-require('0xDmtri.configs.harpoon')
-
--- [[ Configure Telescope ]]
-require('0xDmtri.configs.telescope')
-
--- [[ Configure Treesitter ]]
-require('0xDmtri.configs.treesitter')
-
--- [[ Configure LSP ]]
-require('0xDmtri.configs.lsp')
-
--- [[ Configure Neo Tree]]
-require('0xDmtri.configs.neotree')
-
--- [[ Configure FTerm ]]
-require('0xDmtri.configs.fterm')
-
--- [[ Configure Crates ]]
-require('0xDmtri.configs.crates')
