@@ -11,7 +11,9 @@ local opts = {
   definition_action_keys = {
     edit = "<CR>",
   },
-
+  ui = {
+    border = "rounded",
+  },
 }
 
 return opts

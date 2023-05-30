@@ -43,11 +43,6 @@ end
 
 -- LSP settings on attach
 lsp.on_attach(function(client, bufnr)
-    if client.name == 'solidity_ls_nomicfoundation' then
-        -- disable semanticTokensProvider which is not working great
-        client.server_capabilities.semanticTokensProvider = nil
-    end
-
     -- LSP keymap
     nmap(bufnr, 'gr', '<cmd>Lspsaga lsp_finder<CR>', '[G]oto [R]eferences')
     nmap(bufnr, 'gd', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -68,14 +63,14 @@ lsp.on_attach(function(client, bufnr)
     nmap(bufnr, ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', 'Go to next diagnostic msg')
     nmap(bufnr, '<leader>q', '<cmd>Lspsaga show_buf_diagnostics<CR>', 'Open diagnostic list')
 
-    -- Create a command `:Format` local to the LSP buffer
-    vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-        vim.lsp.buf.format()
-    end, { desc = 'Format current buffer with LSP' })
-
     -- Enable autoformt for all LSP except Solidity
     if client.supports_method('textDocument/formatting') and client.name ~= 'solidity_ls_nomicfoundation' then
         require('lsp-format').on_attach(client)
+    end
+
+    -- disable semanticTokensProvider for Solidity which is not working great
+    if client.name == 'solidity_ls_nomicfoundation' then
+        client.server_capabilities.semanticTokensProvider = nil
     end
 end)
 
@@ -128,6 +123,10 @@ cmp.setup {
         expand = function(args)
             luasnip.lsp_expand(args.body)
         end,
+    },
+    window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
     },
     mapping = cmp.mapping.preset.insert {
         ['<C-j>'] = cmp.mapping.select_next_item(),
