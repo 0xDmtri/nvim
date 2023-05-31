@@ -1,5 +1,8 @@
 -- [[ Configure LSP Saga ]]
 
+-- Floating terminal
+vim.keymap.set({ "n", "t" }, "<C-\\>", "<cmd>Lspsaga term_toggle<CR>")
+
 local opts = {
   move_in_saga = {
     prev = "<C-k>",

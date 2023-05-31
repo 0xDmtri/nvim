@@ -258,15 +258,6 @@ require('lazy').setup({
   },
 
   {
-    -- Float terminal
-    'numToStr/FTerm.nvim',
-    config = function()
-      -- [[ Configure FTerm ]]
-      require('0xDmtri.configs.fterm')
-    end,
-  },
-
-  {
     -- File bookmarks
     'ThePrimeagen/harpoon',
     dependencies = {
