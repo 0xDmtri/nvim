@@ -69,9 +69,9 @@ lsp.on_attach(function(client, bufnr)
     end
 
     -- disable semanticTokensProvider for Solidity which is not working great
-    if client.name == 'solidity_ls_nomicfoundation' then
-        client.server_capabilities.semanticTokensProvider = nil
-    end
+    -- if client.name == 'solidity_ls_nomicfoundation' then
+    --     client.server_capabilities.semanticTokensProvider = nil
+    -- end
 end)
 
 -- call setup
