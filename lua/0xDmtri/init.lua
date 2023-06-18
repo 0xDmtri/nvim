@@ -284,6 +284,10 @@ require('lazy').setup({
   {
     -- Context functions while scrolling
     'nvim-treesitter/nvim-treesitter-context',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-nea-tree/neo-tree.nvim',
+    },
     config = function()
       require('treesitter-context').setup {}
     end,
