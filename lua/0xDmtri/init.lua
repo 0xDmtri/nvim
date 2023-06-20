@@ -286,7 +286,7 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter-context',
     dependencies = {
       'nvim-treesitter/nvim-treesitter',
-      'nvim-nea-tree/neo-tree.nvim',
+      'nvim-neo-tree/neo-tree.nvim',
     },
     config = function()
       require('treesitter-context').setup {}
