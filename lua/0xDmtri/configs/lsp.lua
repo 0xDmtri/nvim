@@ -53,6 +53,7 @@ lsp.on_attach(function(client, bufnr)
     nmap(bufnr, '<leader>d', '<cmd>Lspsaga peek_type_definition<CR>', 'Type [D]efinition')
     nmap(bufnr, '<leader>ss', require('telescope.builtin').lsp_document_symbols, '[S]earch document [S]ymbols')
     nmap(bufnr, 'K', '<cmd>Lspsaga hover_doc<CR>', 'Hover Documentation')
+    nmap(bufnr, '<leader>o', '<cmd>Lspsaga outline<CR>', '[O]utline')
 
     -- in INSERT mode only
     vim.keymap.set('i', '<C-s>', vim.lsp.buf.signature_help, { desc = 'Signature Help' })

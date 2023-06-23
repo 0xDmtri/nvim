@@ -113,9 +113,9 @@ require('lazy').setup({
       require("lspsaga").setup(opts)
     end,
     dependencies = {
-      { "nvim-tree/nvim-web-devicons" },
-      -- Please make sure you install markdown and markdown_inline parser
-      { "nvim-treesitter/nvim-treesitter" }
+      "nvim-tree/nvim-web-devicons",
+      "nvim-treesitter/nvim-treesitter",
+      'VonHeikemen/lsp-zero.nvim',
     }
   },
 
