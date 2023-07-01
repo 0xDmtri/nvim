@@ -68,11 +68,6 @@ lsp.on_attach(function(client, bufnr)
     if client.supports_method('textDocument/formatting') and client.name ~= 'solidity_ls_nomicfoundation' then
         require('lsp-format').on_attach(client)
     end
-
-    -- disable semanticTokensProvider for Solidity which is not working great
-    -- if client.name == 'solidity_ls_nomicfoundation' then
-    --     client.server_capabilities.semanticTokensProvider = nil
-    -- end
 end)
 
 -- call setup
