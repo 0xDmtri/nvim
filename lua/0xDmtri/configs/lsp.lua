@@ -44,13 +44,13 @@ end
 -- LSP settings on attach
 lsp.on_attach(function(client, bufnr)
     -- LSP keymap
-    nmap(bufnr, 'gr', '<cmd>Lspsaga lsp_finder<CR>', '[G]oto [R]eferences')
+    nmap(bufnr, 'gr', '<cmd>Lspsaga finder ref<CR>', '[G]oto [R]eferences')
     nmap(bufnr, 'gd', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-    nmap(bufnr, 'gD', '<cmd>Lspsaga peek_definition<CR>', '[G]oto [D]efinition')
-    nmap(bufnr, 'gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
+    nmap(bufnr, 'gD', '<cmd>Lspsaga finder def<CR>', '[G]oto [D]efinition')
+    nmap(bufnr, 'gI', '<cmd>Lspsaga finder imp<CR>', '[G]oto [I]mplementation')
     nmap(bufnr, '<leader>ca', '<cmd>Lspsaga code_action<CR>', '[C]ode [A]ction')
     nmap(bufnr, '<leader>rn', '<cmd>Lspsaga rename<CR>', '[R]e[n]ame')
-    nmap(bufnr, '<leader>d', '<cmd>Lspsaga peek_type_definition<CR>', 'Type [D]efinition')
+    nmap(bufnr, '<leader>d', '<cmd>Lspsaga finder tyd<CR>', 'Type [D]efinition')
     nmap(bufnr, '<leader>ss', require('telescope.builtin').lsp_document_symbols, '[S]earch document [S]ymbols')
     nmap(bufnr, 'K', '<cmd>Lspsaga hover_doc<CR>', 'Hover Documentation')
     nmap(bufnr, '<leader>o', '<cmd>Lspsaga outline<CR>', '[O]utline')
