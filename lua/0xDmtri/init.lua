@@ -66,6 +66,7 @@ require('lazy').setup({
           -- Useful status updates for LSP
           {
             'j-hui/fidget.nvim',
+            branch = 'legacy',
             dependencies = {
               "xiyaowong/transparent.nvim",
             },
@@ -295,8 +296,4 @@ require('lazy').setup({
 
   -- Huff syntax highlighting
   { "wuwe1/vim-huff", lazy = false },
-
-  -- Debuggin suit
-  require '0xDmtri.plugins.debug',
-
 }, {})
