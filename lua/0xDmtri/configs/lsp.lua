@@ -6,16 +6,15 @@ require('neodev').setup({})
 -- setup LSP-ZERO
 local lsp = require('lsp-zero').preset({ 'recommended' })
 
--- make sure this servers installed
+-- NOTE: I installed rust-analyzer, ruff and forge-fmt locally!
+
+-- make sure this servers installed via Mason
 lsp.ensure_installed({
     -- LSPs:
     'lua_ls',
     'tsserver',
     'solidity_ls_nomicfoundation',
-    'ruff_lsp',
-
-    -- Linters and Formaters:
-    'eslint',
+    'pyright',
 })
 
 -- configue Lua Server
@@ -42,7 +41,7 @@ local nmap = function(bufnr, keys, func, desc)
 end
 
 -- LSP settings on attach
-lsp.on_attach(function(client, bufnr)
+lsp.on_attach(function(_, bufnr)
     -- LSP keymap
     nmap(bufnr, 'gr', '<cmd>Lspsaga finder ref<CR>', '[G]oto [R]eferences')
     nmap(bufnr, 'gd', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -63,15 +62,44 @@ lsp.on_attach(function(client, bufnr)
     nmap(bufnr, '[d', '<cmd>Lspsaga diagnostic_jump_prev<CR>', 'Go to prev diagnostic msg')
     nmap(bufnr, ']d', '<cmd>Lspsaga diagnostic_jump_next<CR>', 'Go to next diagnostic msg')
     nmap(bufnr, '<leader>q', '<cmd>Lspsaga show_buf_diagnostics<CR>', 'Open diagnostic list')
-
-    -- Enable autoformt for all LSP except Solidity
-    if client.supports_method('textDocument/formatting') and client.name ~= 'solidity_ls_nomicfoundation' then
-        require('lsp-format').on_attach(client)
-    end
 end)
+
+-- enable format on save
+lsp.format_on_save({
+    format_opts = {
+        async = false,
+        timeout_ms = 10000,
+    },
+    servers = {
+        -- Langs that will use null-ls for formatting
+        ['null-ls'] = { 'javascript', 'typescript', 'python', 'solidity', },
+
+        -- Langs that will use other formatters
+        ['lua_ls'] = { 'lua' },
+        ['rust_analyzer'] = { 'rust' }
+    }
+})
 
 -- call setup
 lsp.setup()
+
+
+-- setup null-ls
+local null_ls = require('null-ls')
+null_ls.setup({
+    sources = {
+        -- Formattings
+        null_ls.builtins.formatting.ruff,
+        null_ls.builtins.formatting.forge_fmt,
+        null_ls.builtins.formatting.prettier,
+
+        -- Diagnostics
+        null_ls.builtins.diagnostics.ruff,
+        null_ls.builtins.diagnostics.solhint,
+        null_ls.builtins.diagnostics.eslint_d,
+    }
+})
+
 
 -- initialize rust_analyzer with rust_tools
 local rust_lsp = lsp.build_options('rust_analyzer', {

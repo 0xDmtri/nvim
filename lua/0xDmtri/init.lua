@@ -63,6 +63,12 @@ require('lazy').setup({
           { 'williamboman/mason.nvim',          config = true },
           { 'williamboman/mason-lspconfig.nvim' },
 
+          -- LSP extention for formatting and linting
+          {
+            "jose-elias-alvarez/null-ls.nvim",
+            requires = { "nvim-lua/plenary.nvim" },
+          },
+
           -- Useful status updates for LSP
           {
             'j-hui/fidget.nvim',
@@ -83,11 +89,6 @@ require('lazy').setup({
             end
           },
         }
-      },
-
-      {
-        -- Better Async Formatter
-        'lukas-reineke/lsp-format.nvim',
       },
 
       -- Autocompletion
