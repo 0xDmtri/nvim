@@ -67,8 +67,8 @@ end)
 -- enable format on save
 lsp.format_on_save({
     format_opts = {
-        async = false,
-        timeout_ms = 10000,
+        async = true,
+        timeout_ms = 1000,
     },
     servers = {
         -- Langs that will use null-ls for formatting
