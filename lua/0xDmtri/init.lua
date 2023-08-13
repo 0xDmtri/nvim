@@ -127,6 +127,16 @@ require('lazy').setup({
     dependencies = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
   },
 
+  {
+    -- Python REPL
+    'Vigemus/iron.nvim',
+    event = 'LspAttach',
+    config = function()
+      -- [[ Configure Iron ]]
+      require('0xDmtri.configs.iron')
+    end
+  },
+
   -- Useful plugin to show you pending keybinds.
   { 'folke/which-key.nvim',  opts = {} },
 
