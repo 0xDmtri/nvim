@@ -14,7 +14,6 @@ lsp.ensure_installed({
     'lua_ls',
     'tsserver',
     'solidity_ls_nomicfoundation',
-    'pyright',
 })
 
 -- configue Lua Server
