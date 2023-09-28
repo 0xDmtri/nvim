@@ -16,4 +16,11 @@ M.rose_pine = {
     disable_float_background = vim.g.transparent_enabled,
 }
 
+M.ibl = {
+    indent = {
+        char = '┊',
+        show_trailing_blankline_indent = false,
+    }
+}
+
 return M
