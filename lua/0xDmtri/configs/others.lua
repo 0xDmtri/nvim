@@ -19,7 +19,6 @@ M.rose_pine = {
 M.ibl = {
     indent = {
         char = '┊',
-        show_trailing_blankline_indent = false,
     }
 }
 
