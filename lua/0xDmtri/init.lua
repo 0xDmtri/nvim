@@ -127,16 +127,6 @@ require('lazy').setup({
     dependencies = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
   },
 
-  {
-    -- Python REPL
-    'Vigemus/iron.nvim',
-    event = 'LspAttach',
-    config = function()
-      -- [[ Configure Iron ]]
-      require('0xDmtri.configs.iron')
-    end
-  },
-
   -- Useful plugin to show you pending keybinds.
   { 'folke/which-key.nvim',  opts = {} },
 
@@ -183,10 +173,13 @@ require('lazy').setup({
   {
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
-    opts = {
-      char = '┊',
-      show_trailing_blankline_indent = false,
-    },
+    main = 'ibl',
+    opts = function()
+      return require('0xDmtri.configs.others').ibl
+    end,
+    config = function(_, opts)
+      require('ibl').setup(opts)
+    end,
   },
 
   -- "gc" to comment visual regions/lines
