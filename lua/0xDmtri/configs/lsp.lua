@@ -4,32 +4,29 @@
 require('neodev').setup({})
 
 -- setup LSP-ZERO
-local lsp = require('lsp-zero').preset({ 'recommended' })
+local lsp_zero = require('lsp-zero').preset({ 'recommended' })
 
--- NOTE: I installed rust-analyzer, ruff and forge-fmt locally!
+-- setup Mason and Mason-LspConfig
+require('mason').setup({})
+require('mason-lspconfig').setup({
+    -- make sure this servers installed via Mason
+    -- NOTE: I installed rust-analyzer, ruff and forge-fmt locally!
+    ensure_installed = {
+        -- LSPs:
+        'lua_ls',
+        'tsserver',
+        'solidity_ls_nomicfoundation',
+        'pyright',
 
--- make sure this servers installed via Mason
-lsp.ensure_installed({
-    -- LSPs:
-    'lua_ls',
-    'tsserver',
-    'solidity_ls_nomicfoundation',
-    'pyright',
-})
-
--- configue Lua Server
-lsp.configure('lua_ls', {
-    settings = {
-        Lua = {
-            workspace = { checkThirdParty = false },
-            telemetry = { enable = false },
-        }
+    },
+    handlers = {
+        lsp_zero.default_setup,
+        lua_ls = function()
+            local lua_opts = lsp_zero.nvim_lua_ls()
+            require('lspconfig').lua_ls.setup(lua_opts)
+        end,
     }
 })
-
--- don't initialize this language server
--- we will use rust-tools to setup rust_analyzer
-lsp.skip_server_setup({ 'rust_analyzer' })
 
 -- helper for binds
 local nmap = function(bufnr, keys, func, desc)
@@ -41,7 +38,7 @@ local nmap = function(bufnr, keys, func, desc)
 end
 
 -- LSP settings on attach
-lsp.on_attach(function(_, bufnr)
+lsp_zero.on_attach(function(_, bufnr)
     -- LSP keymap
     nmap(bufnr, 'gr', '<cmd>Lspsaga finder ref<CR>', '[G]oto [R]eferences')
     nmap(bufnr, 'gd', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -65,7 +62,7 @@ lsp.on_attach(function(_, bufnr)
 end)
 
 -- enable format on save
-lsp.format_on_save({
+lsp_zero.format_on_save({
     format_opts = {
         async = false,
         timeout_ms = 500,
@@ -79,10 +76,6 @@ lsp.format_on_save({
         ['rust_analyzer'] = { 'rust' }
     }
 })
-
--- call setup
-lsp.setup()
-
 
 -- setup null-ls
 local null_ls = require('null-ls')
@@ -100,47 +93,43 @@ null_ls.setup({
     }
 })
 
-
 -- initialize rust_analyzer with rust_tools
-local rust_lsp = lsp.build_options('rust_analyzer', {
-    on_attach = function(_, bufnr)
-        print('🦀')
-
-        -- Rust Specific keymaps
-        nmap(bufnr, '<leader>a', require('rust-tools').hover_actions.hover_actions, '[A]ctions Hover')
-        nmap(bufnr, '<leader>ca', require('rust-tools').code_action_group.code_action_group, '[C]ode [A]ction')
-        nmap(bufnr, '<leader>cr', require('rust-tools').runnables.runnables, '[C]argo [R]unnables')
-    end,
-
-    standalone = false,
-
-    capabilities = require('cmp_nvim_lsp').default_capabilities(),
-
-    settings = {
-        ['rust-analyzer'] = {
-            checkOnSave = {
-                command = 'clippy',
-                extraArgs = { '--all', '--', '-W', 'clippy::all' },
-            },
-            cargo = {
-                loadOutDirsFromCheck = true,
-            },
-            procMacro = {
-                enable = true,
-            },
-        }
-    }
-})
-
 require('rust-tools').setup({
-    server = rust_lsp,
+    server = {
+        on_attach = function(_, bufnr)
+            print('🦀')
+
+            -- Rust Specific keymaps
+            nmap(bufnr, '<leader>a', require('rust-tools').hover_actions.hover_actions, '[A]ctions Hover')
+            nmap(bufnr, '<leader>ca', require('rust-tools').code_action_group.code_action_group, '[C]ode [A]ction')
+            nmap(bufnr, '<leader>cr', require('rust-tools').runnables.runnables, '[C]argo [R]unnables')
+        end,
+
+        standalone = false,
+        capabilities = require('cmp_nvim_lsp').default_capabilities(),
+        settings = {
+            ['rust-analyzer'] = {
+                checkOnSave = {
+                    command = 'clippy',
+                    extraArgs = { '--all', '--', '-W', 'clippy::all' },
+                },
+                cargo = {
+                    loadOutDirsFromCheck = true,
+                },
+                procMacro = {
+                    enable = true,
+                },
+            }
+        }
+
+    },
     hover_actions = { auto_focus = true },
     runnables = { use_telescope = true }
 })
 
 -- nvim-cmp setup
-local cmp = require 'cmp'
-local luasnip = require 'luasnip'
+local cmp = require('cmp')
+local luasnip = require('luasnip')
 
 cmp.setup {
     snippet = {
