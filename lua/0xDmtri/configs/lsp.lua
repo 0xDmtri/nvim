@@ -4,7 +4,7 @@
 require('neodev').setup({})
 
 -- setup LSP-ZERO
-local lsp_zero = require('lsp-zero').preset({ 'recommended' })
+local lsp_zero = require('lsp-zero')
 
 -- setup Mason and Mason-LspConfig
 require('mason').setup({})
