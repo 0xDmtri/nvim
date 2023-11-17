@@ -75,16 +75,8 @@ require('lazy').setup({
             dependencies = {
               "xiyaowong/transparent.nvim",
             },
-            -- lil hack to set blend to 0 if transparent and vice versa
-            opts = function()
-              if vim.g.transparent_enabled then
-                return { window = { blend = 0 } }
-              else
-                return { window = { blend = 100 } }
-              end
-            end,
-            config = function(_, opts)
-              require('fidget').setup(opts)
+            config = function()
+              require('fidget').setup()
             end
           },
         }

@@ -73,7 +73,7 @@ lsp_zero.format_on_save({
         -- Langs that will use null-ls for formatting
         ['null-ls'] = { 'javascript', 'typescript', 'python', 'solidity', },
 
-        -- Langs that will use other formatters
+        -- Langs that will use non-lsp formatters
         ['lua_ls'] = { 'lua' },
         ['rust_analyzer'] = { 'rust' }
     }
@@ -84,9 +84,9 @@ local null_ls = require('null-ls')
 null_ls.setup({
     sources = {
         -- Formattings
-        null_ls.builtins.formatting.black,
+        null_ls.builtins.formatting.autopep8,
         null_ls.builtins.formatting.forge_fmt,
-        null_ls.builtins.formatting.prettier,
+        null_ls.builtins.formatting.prettierd,
 
         -- Diagnostics
         null_ls.builtins.diagnostics.solhint,
