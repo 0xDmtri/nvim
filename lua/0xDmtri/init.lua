@@ -72,9 +72,6 @@ require('lazy').setup({
           -- Useful status updates for LSP
           {
             'j-hui/fidget.nvim',
-            dependencies = {
-              "xiyaowong/transparent.nvim",
-            },
             config = function()
               require('fidget').setup()
             end
@@ -268,11 +265,8 @@ require('lazy').setup({
     -- Transparent windows on demand!
     "xiyaowong/transparent.nvim",
     config = function()
-      require('transparent').setup(
-        {
-          extra_groups = { 'NormalFloat' },
-        }
-      )
+      -- [[Configure Transparent ]]
+      require('0xDmtri.configs.transp')
     end,
   },
 
