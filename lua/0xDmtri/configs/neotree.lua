@@ -1,6 +1,10 @@
 -- [[ Configure Neotree]]
 
-require('neo-tree').setup {}
+require('neo-tree').setup({
+  window = {
+    position = 'right'
+  }
+})
 
 vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
 

@@ -10,7 +10,7 @@ local lsp_zero = require('lsp-zero')
 require('mason').setup({})
 require('mason-lspconfig').setup({
     -- make sure this servers installed via Mason
-    -- NOTE: I installed rust-analyzer, ruff and forge-fmt locally!
+    -- NOTE: rust-analyzer is installed locally!
     ensure_installed = {
         -- LSPs:
         'lua_ls',
@@ -23,6 +23,8 @@ require('mason-lspconfig').setup({
         lsp_zero.default_setup,
         lua_ls = function()
             local lua_opts = lsp_zero.nvim_lua_ls()
+            -- disable buggy alert of missing fields
+            lua_opts.settings.Lua.diagnostics = { disable = { "missing-fields" } }
             require('lspconfig').lua_ls.setup(lua_opts)
         end,
     }
@@ -82,12 +84,11 @@ local null_ls = require('null-ls')
 null_ls.setup({
     sources = {
         -- Formattings
-        null_ls.builtins.formatting.ruff,
+        null_ls.builtins.formatting.black,
         null_ls.builtins.formatting.forge_fmt,
         null_ls.builtins.formatting.prettier,
 
         -- Diagnostics
-        null_ls.builtins.diagnostics.ruff,
         null_ls.builtins.diagnostics.solhint,
         null_ls.builtins.diagnostics.eslint_d,
     }

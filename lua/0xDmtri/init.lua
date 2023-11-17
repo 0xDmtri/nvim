@@ -72,7 +72,6 @@ require('lazy').setup({
           -- Useful status updates for LSP
           {
             'j-hui/fidget.nvim',
-            branch = 'legacy',
             dependencies = {
               "xiyaowong/transparent.nvim",
             },
@@ -108,17 +107,15 @@ require('lazy').setup({
     "nvimdev/lspsaga.nvim",
     name = 'lspsaga',
     event = "LspAttach",
-    opts = function()
-      return require('0xDmtri.configs.saga')
-    end,
-    config = function(opts)
-      require("lspsaga").setup(opts)
-    end,
     dependencies = {
       "nvim-tree/nvim-web-devicons",
       "nvim-treesitter/nvim-treesitter",
       'VonHeikemen/lsp-zero.nvim',
-    }
+    },
+    config = function()
+      -- [[ Configure Telescope ]]
+      require('0xDmtri.configs.saga')
+    end,
   },
 
   {

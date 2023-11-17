@@ -6,6 +6,7 @@ M.lualine = {
         icons_enabled = false,
         component_separators = '|',
         section_separators = '',
+        disabled_filetypes = { 'lazy', 'neo-tree' }
     },
 }
 
