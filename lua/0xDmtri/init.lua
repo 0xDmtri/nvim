@@ -66,7 +66,7 @@ require('lazy').setup({
           -- LSP extention for formatting and linting
           {
             "jose-elias-alvarez/null-ls.nvim",
-            requires = { "nvim-lua/plenary.nvim" },
+            dependencies = { "nvim-lua/plenary.nvim" },
           },
 
           -- Useful status updates for LSP
